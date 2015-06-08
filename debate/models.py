@@ -962,11 +962,17 @@ class Round(models.Model):
                 "odd_bracket"     : "draw_odd_bracket",
                 "pairing_method"  : "draw_pairing_method",
             })
-        elif self.draw_type == self.DRAW_ROUNDROBIN:
+        elif self.draw_type == self.DRAW_FIRSTBREAK:
+            teams = annotate_team_standings(draw_teams, self.prev, shuffle=True)
+            draw_type = "first_elimination"
+            OPTIONS_TO_CONFIG_MAPPING.update({
+                "break_size" : "break_size",
+            })
+        elif self.draw_type == self.DRAW_BREAK:
             teams = draw_teams
-            draw_type = "round_robin"
+            draw_type = "elimination"
         else:
-            raise RuntimeError("Break rounds aren't supported yet.")
+            raise RuntimeError("Unsupported draw method")
 
         # Annotate attributes as required by DrawGenerator.
         if self.prev:
