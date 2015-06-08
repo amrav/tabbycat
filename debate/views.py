@@ -717,10 +717,15 @@ def draw(request, round):
 
 
 def draw_none(request, round):
-    all_teams_count = Team.objects.filter(tournament=round.tournament).count()
     active_teams = round.active_teams.all()
     active_venues_count = round.active_venues.count()
-    rooms = float(active_teams.count()) / 2
+    if round.stage == round.STAGE_ELIMINATION:
+        all_teams_count = round.tournament.config.get("break_size")
+        rooms = float(all_teams_count) / 2
+    else:
+        all_teams_count = Team.objects.filter(tournament=round.tournament).count()
+        rooms = float(active_teams.count()) / 2
+
     return r2r(request, "draw_none.html", dict(active_teams=active_teams,
                                                active_venues_count=active_venues_count,
                                                rooms=rooms,
