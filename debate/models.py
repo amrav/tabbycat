@@ -109,9 +109,8 @@ class Tournament(models.Model):
     def advance_round(self):
         next_round_seq = self.current_round.seq + 1
         next_round = Round.objects.get(seq=next_round_seq, tournament=self)
-        if next_round in self.prelim_rounds():
-            self.current_round = next_round
-            self.save()
+        self.current_round = next_round
+        self.save()
 
     @cached_property
     def config(self):
@@ -702,6 +701,8 @@ class Round(models.Model):
     draw_type    = models.CharField(max_length=1, choices=DRAW_CHOICES, help_text="Which draw technique to use")
     stage        = models.CharField(max_length=1, choices=STAGE_CHOICES, default=STAGE_PRELIMINARY, help_text="Whether it is a break round or not")
 
+    break_category     = models.ForeignKey(BreakCategory, blank=True, null=True, help_text="Whether this is an elimination round")
+
     draw_status        = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, default=STATUS_NONE)
     venue_status       = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, default=STATUS_NONE)
     adjudicator_status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, default=STATUS_NONE)
@@ -1002,6 +1003,10 @@ class Round(models.Model):
     def team_availability(self):
         all_teams = self.base_availability(Team, 'debate_activeteam', 'team_id',
                                       'debate_team')
+
+        if self.stage == self.STAGE_ELIMINATION:
+            all_teams = standings.division_ranked_team_standings(all_teams, self)
+
         relevant_teams = [t for t in all_teams if t.tournament == self.tournament]
         return relevant_teams
 

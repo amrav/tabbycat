@@ -6,8 +6,8 @@
 #select_breaking {
   display: none;
 }
-.adj-checkins #select_breaking {
-  display: block;
+.adj-checkins #select_breaking, .first-elimination-checkins #select_breaking{
+  display: block; // Hide select breaking from prelim rounds
 }
 
 // Ballot Entry

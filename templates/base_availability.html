@@ -98,7 +98,7 @@
       });
 
       $('#select_breaking').click(function() {
-        $(".breaking-adj :checkbox").each(function(){
+        $(".breaking-adj :checkbox", ".breaking-team :checkbox").each(function(){
           if (!this.checked) {
             $(this).click();
             updateCheckbox(this);
