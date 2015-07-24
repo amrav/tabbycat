@@ -4,7 +4,7 @@ from collections import Counter
 from standings import annotate_team_standings
 from models import BreakingTeam
 
-def get_breaking_teams(category, include_all=False, include_categories=False):
+def get_teams_breaking(category, include_all=False, include_categories=False):
     """Returns a list of Teams, with additional attributes. For each Team t in
     the returned list:
         t.rank is the rank of the team, including ineligible teams.
@@ -27,7 +27,7 @@ def get_breaking_teams(category, include_all=False, include_categories=False):
     delimited list of category names that are not this category, and lower
     or equal priority to this category.
     """
-    teams = category.breaking_teams.all()
+    teams = category.teams_breaking.all()
     if not include_all:
         teams = teams.filter(break_rank__isnull=False)
     teams = annotate_team_standings(teams, tournament=category.tournament)
@@ -50,15 +50,15 @@ def get_breaking_teams(category, include_all=False, include_categories=False):
 
     return teams
 
-def generate_all_breaking_teams(tournament):
+def generate_all_teams_breaking(tournament):
     """Deletes all breaking teams information, then generates breaking teams
-    from scratch according to update_breaking_teams()."""
+    from scratch according to update_teams_breaking()."""
     for category in tournament.breakcategory_set.all():
         category.breakingteam_set.all().delete()
-    update_all_breaking_teams(tournament)
+    update_all_teams_breaking(tournament)
 
-def update_all_breaking_teams(tournament):
-    """Runs update_breaking_teams for all categories, taking taking break
+def update_all_teams_breaking(tournament):
+    """Runs update_teams_breaking for all categories, taking taking break
     category priorities into account appropriately.
     """
     teams_broken_higher_priority = set()
@@ -74,10 +74,10 @@ def update_all_breaking_teams(tournament):
             cur_priority = category.priority
 
         eligible_teams = _eligible_team_set(category)
-        this_break = _generate_breaking_teams(category, eligible_teams, teams_broken_higher_priority)
+        this_break = _generate_teams_breaking(category, eligible_teams, teams_broken_higher_priority)
         teams_broken_cur_priority.update(this_break)
 
-def update_breaking_teams(category):
+def update_teams_breaking(category):
     """Computes the breaking teams and stores them in the database as
     BreakingTeam objects. Each BreakingTeam bt has:
         bt.rank set to the rank of the team, including ineligible teams
@@ -97,7 +97,7 @@ def update_breaking_teams(category):
     higher_breakingteams = BreakingTeam.objects.filter(break_category__priority__lt=category.priority, break_rank__isnull=False).select_related('team')
     higher_teams = {bt.team for bt in higher_breakingteams}
     eligible_teams = _eligible_team_set(category)
-    _generate_breaking_teams(category, eligible_teams, higher_teams)
+    _generate_teams_breaking(category, eligible_teams, higher_teams)
 
 def _eligible_team_set(category):
     if category.is_general:
@@ -105,26 +105,27 @@ def _eligible_team_set(category):
     else:
         return category.team_set
 
-def _generate_breaking_teams(category, eligible_teams, teams_broken_higher_priority=set()):
+def _generate_teams_breaking(category, eligible_teams, teams_broken_higher_priority=set()):
     """Generates a list of breaking teams for the given category and returns
     a list of teams in the (actual) break, i.e. excluding teams that are
     ineligible, capped, broke in a different break, and so on."""
 
     eligible_teams = annotate_team_standings(eligible_teams, tournament=category.tournament)
 
-    break_size = category.break_size
-    institution_cap = category.institution_cap
-
     prev_rank_value = (None, None) # (points, speaks)
     cur_rank = 0
-    breaking_teams = list()
-    breaking_teams_to_create = list()
-
-    # Variables for institutional caps and non-breaking teams
     cur_break_rank = 0 # actual break rank
     cur_break_seq = 0  # sequential count of breaking teams
-    teams_from_institution = Counter()
 
+    teams_breaking = list()
+    breakingteams_all = list()
+    breakingteams_to_create = list()
+    breakingteams_to_save = list()
+
+    # Variables for institutional caps and non-breaking teams
+    num_teams_from_institution = Counter()
+
+    # Do initial allocation of ranks and break ranks
     for i, team in enumerate(eligible_teams, start=1):
 
         try:
@@ -139,7 +140,11 @@ def _generate_breaking_teams(category, eligible_teams, teams_broken_higher_prior
         is_new_rank = rank_value != prev_rank_value
         if is_new_rank:
             # if we have enough teams, we're done
-            if len(breaking_teams) >= break_size:
+            if len(teams_breaking) >= category.break_size:
+                break
+            # under AIDA 2016 rules if we've gone past five wins, we're done
+            if category.institution_cap_rule == category.INSTITUTION_CAP_RULE_AIDA_2016 \
+                    and team.points < 5:
                 break
             cur_rank = i
             prev_rank_value = rank_value
@@ -154,7 +159,7 @@ def _generate_breaking_teams(category, eligible_teams, teams_broken_higher_prior
             bt.remark = bt.REMARK_INELIGIBLE
 
         # Check if capped out by institution cap
-        elif institution_cap > 0 and teams_from_institution[team.institution] >= institution_cap:
+        elif _capped_out(category, num_teams_from_institution[team.institution], cur_rank):
             bt.remark = bt.REMARK_CAPPED
 
         # Check if already broken to a higher category
@@ -169,20 +174,57 @@ def _generate_breaking_teams(category, eligible_teams, teams_broken_higher_prior
                 cur_break_rank = cur_break_seq
             bt.break_rank = cur_break_rank
 
-            breaking_teams.append(team)
+            teams_breaking.append(team)
 
-        bt.full_clean()
         if existing:
-            bt.save()
+            breakingteams_to_save.append(bt)
         else:
-            breaking_teams_to_create.append(bt)
+            breakingteams_to_create.append(bt)
+        breakingteams_all.append(bt)
 
         # Take note of the institution
-        teams_from_institution[team.institution] += 1
+        num_teams_from_institution[team.institution] += 1
 
-    BreakingTeam.objects.bulk_create(breaking_teams_to_create)
+    # Bring back capped out teams if necessary to fill break
+    num_teams_to_cap_in = category.break_size - len(teams_breaking)
+    num_teams_capped_in = 0
+    cur_rank = 0
+    for bt in breakingteams_all:
+        is_new_rank = bt.rank != cur_rank
+
+
+
+        num_teams_to_cap_in -=
+        if num_teams_to_cap_in == 0:
+            break
+
+    #
+    if len(teams_breaking) < category.break_size:
+        for i, bt in enumerate(capped_breakingteams):
+            if i >= category.break_size - len(teams_breaking):
+                bt.remark = None
+
+    # Clean and save to database
+    assert set(breakingteams_all) == set(breakingteams_to_save + breakingteams_to_create)
+    for bt in breakingteams_all:
+        bt.full_clean()
+    for bt in breakingteams_to_save:
+        bt.save()
+    BreakingTeam.objects.bulk_create(breakingteams_to_create)
     BreakingTeam.objects.filter(break_category=category, break_rank__isnull=False).exclude(
-        team_id__in=[t.id for t in breaking_teams]).delete()
+        team_id__in=[t.id for t in teams_breaking]).delete()
 
+    return teams_breaking
 
-    return breaking_teams
+def _capped_out(bt, category, num_teams_from_institution):
+    if category.institution_cap_rule == category.INSTITUTION_CAP_RULE_NONE:
+        return False
+
+    elif category.institution_cap_rule == category.INSTITUTION_CAP_RULE_AIDA_PRE_2015:
+        return num_teams_from_institution >= category.institution_cap
+
+    elif category.institution_cap_rule == category.INSTITUTION_CAP_RULE_AIDA_2016:
+        if cur_rank <= category.break_size:
+            return num_teams_from_institution >= category.institution_cap
+        else:
+            return num_teams_from_institution >= 1

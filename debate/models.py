@@ -301,6 +301,15 @@ class BreakCategory(models.Model):
     institution_cap = models.IntegerField(blank=True, null=True, help_text="Maximum number of teams from a single institution in this category; leave blank if not applicable")
     priority = models.IntegerField(help_text="If a team breaks in multiple categories, lower priority numbers take precedence; teams can break into multiple categories if and only if they all have the same priority")
 
+    INSTITUTION_CAP_RULE_NONE          = 'N'
+    INSTITUTION_CAP_RULE_AIDA_PRE_2015 = 'a'
+    INSTITUTION_CAP_RULE_AIDA_2016     = 'b'
+    INSTITUTION_CAP_RULE_CHOICES = (
+        (INSTITUTION_CAP_RULE_NONE, 'None'),
+        (INSTITUTION_CAP_RULE_AIDA_PRE_2015, 'AIDA pre-2015'),
+        (INSTITUTION_CAP_RULE_AIDA_2016, 'AIDA 2016'),
+    )
+    institution_cap_rule = models.CharField(max_length=1, choices=INSTITUTION_CAP_RULE_CHOICES, default=INSTITUTION_CAP_RULE_NONE)
     # Does nothing now, reintroduce later
     # STATUS_NONE      = 'N'
     # STATUS_DRAFT     = 'D'
@@ -317,6 +326,10 @@ class BreakCategory(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def clean(self):
+        if self.institution_cap_rule != self.INSTITUTION_CAP_RULE_NONE and not self.institution_cap:
+            raise ValidationError({"institution_cap": "There must be a nonzero institution cap if the institution cap rule is not None"})
 
     class Meta:
         unique_together = [('tournament', 'seq'), ('tournament', 'slug')]
