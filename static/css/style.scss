@@ -1,9 +1,58 @@
-// Note tabby cat's modules are imported in the <head> — concatenation happens using the compressor
 // Core variables and mixins
-@import "bootstrap/variables";
-@import "bootstrap/mixins";
-@import "bootstrap/type";
-@import "bootstrap/forms";
+@import "../vendors/bootstrap/css/bootstrap/variables";
+@import "../vendors/bootstrap/css/bootstrap/mixins";
+
+// Custom overrides
+@import "custom-additions";
+
+// Reset
+@import "../vendors/bootstrap/css/bootstrap/normalize";
+@import "../vendors/bootstrap/css/bootstrap/print";
+
+// Core CSS
+@import "../vendors/bootstrap/css/bootstrap/scaffolding";
+@import "../vendors/bootstrap/css/bootstrap/type";
+@import "../vendors/bootstrap/css/bootstrap/code";
+@import "../vendors/bootstrap/css/bootstrap/grid";
+@import "../vendors/bootstrap/css/bootstrap/tables";
+@import "../vendors/bootstrap/css/bootstrap/forms";
+@import "../vendors/bootstrap/css/bootstrap/buttons";
+
+// Components
+@import "../vendors/bootstrap/css/bootstrap/component-animations";
+@import "../vendors/bootstrap/css/bootstrap/glyphicons";
+@import "../vendors/bootstrap/css/bootstrap/dropdowns";
+@import "../vendors/bootstrap/css/bootstrap/button-groups";
+@import "../vendors/bootstrap/css/bootstrap/input-groups";
+@import "../vendors/bootstrap/css/bootstrap/navs";
+@import "../vendors/bootstrap/css/bootstrap/navbar";
+@import "../vendors/bootstrap/css/bootstrap/breadcrumbs";
+@import "../vendors/bootstrap/css/bootstrap/pagination";
+@import "../vendors/bootstrap/css/bootstrap/pager";
+@import "../vendors/bootstrap/css/bootstrap/labels";
+@import "../vendors/bootstrap/css/bootstrap/badges";
+@import "../vendors/bootstrap/css/bootstrap/jumbotron";
+@import "../vendors/bootstrap/css/bootstrap/thumbnails";
+@import "../vendors/bootstrap/css/bootstrap/alerts";
+@import "../vendors/bootstrap/css/bootstrap/progress-bars";
+@import "../vendors/bootstrap/css/bootstrap/media";
+@import "../vendors/bootstrap/css/bootstrap/list-group";
+@import "../vendors/bootstrap/css/bootstrap/panels";
+@import "../vendors/bootstrap/css/bootstrap/wells";
+@import "../vendors/bootstrap/css/bootstrap/close";
+
+// Components w/ JavaScript
+@import "../vendors/bootstrap/css/bootstrap/modals";
+@import "../vendors/bootstrap/css/bootstrap/tooltip";
+@import "../vendors/bootstrap/css/bootstrap/popovers";
+@import "../vendors/bootstrap/css/bootstrap/carousel";
+
+// Utility classes
+@import "../vendors/bootstrap/css/bootstrap/utilities";
+@import "../vendors/bootstrap/css/bootstrap/responsive-utilities";
+
+
+
 @include text-emphasis-variant('.text-success', $brand-success);
 @include text-emphasis-variant('.text-info', $brand-info);
 @include text-emphasis-variant('.text-warning', $brand-warning);
