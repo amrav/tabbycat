@@ -102,15 +102,18 @@ def get_git_push_spec():
 
 # Create the app with addons
 addons = ["memcachier", "heroku-postgresql:%s" % args.pg_plan]
-command = ["heroku", "apps:create"]
+command = ["heroku", "apps:create", "--region", "eu"]
 if addons:
     command.extend(["--addons", ",".join(addons)])
 if args.urlname != "-":
     command.append(args.urlname)
-output = get_output_from_command(command)
-match = re.search("https://([\w_-]+)\.herokuapp\.com/\s+\|\s+(https://git.heroku.com/[\w_-]+.git)", output)
-urlname = match.group(1)
-heroku_url = match.group(2)
+try:
+    output = get_output_from_command(command)
+except subprocess.CalledProcessError:
+    print 'Warning: app already exists. Trying to continue.'
+#match = re.search("https://([\w_-]+)\.herokuapp\.com/\s+\|\s+(https://git.heroku.com/[\w_-]+.git)", output)
+urlname = args.urlname
+heroku_url = 'https://git.heroku.com/%s.git' % args.urlname
 
 # Set config variables
 command = ["config:add", "WAITRESS_THREADS=4"]
