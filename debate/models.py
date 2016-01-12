@@ -766,8 +766,8 @@ class Round(models.Model):
         return self.motion_set.order_by('seq')
 
     def draw(self, override_team_checkins=False):
-        if self.draw_status != self.STATUS_NONE:
-            raise RuntimeError("Tried to run draw on round that already has a draw")
+        #if self.draw_status != self.STATUS_NONE:
+        #    raise RuntimeError("Tried to run draw on round that already has a draw")
 
         # Delete all existing debates for this round.
         Debate.objects.filter(round=self).delete()
