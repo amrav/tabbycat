@@ -264,8 +264,8 @@ class Team(models.Model):
     def get_cached_institution(self):
         cached_key = "%s_%s_%s" % ('teamid', self.id, '_institution__object')
         cached_value = cache.get(cached_key)
-        if cached_value:
-            return cache.get(cached_key)
+        if cached_value is not None:
+            return cached_value
         else:
             cached_value = self.institution
             cache.set(cached_key, cached_value, None)
