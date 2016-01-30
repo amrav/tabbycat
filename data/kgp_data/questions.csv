@@ -1,0 +1,2 @@
+seq,reference,name,text,answer_type,required,team_on_orallist,chair_on_panel,panel_on_chair,panel_on_panel,min_value,max_value,choices
+10,agree,Agree,Did you agree with the decision?,yesno,0,1,0,0,0,,,

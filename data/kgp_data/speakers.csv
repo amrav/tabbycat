@@ -1,0 +1,112 @@
+name,institution,team_name,use_team_name_as_prefix,gender,pronoun,novice_status
+Nikhil Iyer,NUJS,A,1,M,he,0
+Ananya Kumar,NUJS,A,1,F,she,0
+Jalaj Pandey,NUJS,A,1,M,he,0
+Vinayak Chawla,NUJS,B,1,M,he,0
+Shourya Dasgupta,NUJS,B,1,M,he,0
+Kushagr Bakshi,NUJS,B,1,M,he,0
+Arka Banerjee Choudhury,NUJS,C,1,M,he,0
+Ananya Nigam,NUJS,C,1,F,she,0
+Md Zaid,NUJS,C,1,M,he,0
+Sarath Ninan Mathew ,NUJS,D,1,M,he,0
+Shruthi Srinivasan,NUJS,D,1,F,she,0
+Rishabh Mohnot,NUJS,D,1,M,he,0
+Shreepath Jain,RMLNLU,A,1,M,he,0
+Satwek Misra,RMLNLU,A,1,M,he,0
+Akshay Kumar,RMLNLU,A,1,M,he,0
+Rishika Jain,"Faculty of Law, Jamia Millia Islamia",A,1,F,she,0
+Shreya Shukla,"Faculty of Law, Jamia Millia Islamia",A,1,F,she,0
+Ambika Aggarwal,"Faculty of Law, Jamia Millia Islamia",A,1,F,she,0
+Umang Tyagi,University School of Law and Legal Studies,A,1,M,he,0
+Shubham Rustagi,University School of Law and Legal Studies,A,1,M,he,0
+Amartya Prakash,University School of Law and Legal Studies,A,1,M,he,0
+Rishabh Iyer,NMIMS SOL,A,1,M,he,0
+Puneet Pathak,NMIMS SOL,A,1,M,he,0
+Pratham Ajmera,NMIMS SOL,A,1,M,he,0
+Moha Paranjpe,NMIMS SOL,B,1,F,she,0
+Teesta Sen,NMIMS SOL,B,1,F,she,0
+Praneeta Ragji,NMIMS SOL,B,1,F,she,0
+Shreya Sharma (c),"Amity Law School, IP University",A,1,F,she,0
+Udayvir,"Amity Law School, IP University",A,1,M,he,0
+Mansi Gupta,"Amity Law School, IP University",A,1,F,she,0
+Sargam Sharma,Presidency,A,1,M,he,0
+Auritra Chandra,Presidency,A,1,M,he,0
+Rahul Ganguly,Presidency,A,1,M,he,0
+Devarchan,Heritage,A,1,M,he,0
+Anweysha,Heritage,A,1,F,she,0
+Annesha,Heritage,A,1,F,she,0
+Anmol Gupta,NLUO,A,1,F,she,0
+Kushagra Goyal,NLUO,A,1,M,he,0
+Diya Dasgupta,NLUO,A,1,F,she,0
+Artrika Pachori,Gargi,A,1,F,she,0
+Cheshta Kamran,Gargi,A,1,F,she,0
+Simran Arora,Gargi,A,1,F,she,0
+Shweta Rao,Nalsar,A,1,F,she,0
+Aishwarya Birla,Nalsar,A,1,F,she,0
+Satvik MC ,Nalsar,A,1,M,he,0
+Arushi Nayar,Nalsar,B,1,F,she,0
+Nishanth Vasanthkumar,Nalsar,B,1,M,he,0
+Sameer Thakur,Nalsar,B,1,M,he,0
+Avigat Bawa,St.Xaviers,A,1,M,he,0
+Aakash Bhattacharya,St.Xaviers,A,1,M,he,0
+Advika Jalan,St.Xaviers,A,1,F,she,0
+Darshann Kayan,St.Xaviers,B,1,M,he,0
+Apoorva Sekhar,St.Xaviers,B,1,M,he,0
+Vinny Parekh,St.Xaviers,B,1,M,he,0
+Sujitha Jayaraj,NITR,A,1,F,she,0
+Sachin Nambiar,NITR,A,1,M,he,0
+Shubhankar Sharma,NITR,A,1,M,he,0
+Debjit Nandi,NITR,B,1,M,he,0
+Harsha Sambaraju,NITR,B,1,M,he,0
+Ajay Malepati,NITR,B,1,M,he,0
+diksha arora,Christ,A,1,F,she,0
+sidharth Ray,Christ,A,1,M,he,0
+Lyssa Maria Brito,Christ,A,1,F,she,0
+Aman Mihir,Christ,B,1,F,she,0
+Bharath G,Christ,B,1,M,he,0
+Kiran S,Christ,B,1,M,he,0
+Divij Singh Kadan,JGLS,A,1,M,he,0
+Abhishek Nevatia,JGLS,A,1,M,he,0
+Srivatsan Manivannan,JGLS,A,1,M,he,0
+Apoorv Madan,JGLS,B,1,M,he,0
+Varisha Sharma,JGLS,B,1,F,she,0
+Anicham Tamilmani,JGLS,B,1,M,he,0
+Kazi Fardeen Ishraq,Scholastica Mirpur,A,1,M,he,0
+Shafkat Wahid,Scholastica Mirpur,A,1,M,he,0
+Shadman Sayeed,Scholastica Mirpur,A,1,M,he,0
+Syed Mohaimeen Ul Islam,IUB,A,1,M,he,0
+Archi Ananya,IUB,A,1,F,she,0
+Ridoan A Z M,IUB,A,1,M,he,0
+Tanvir Ahmed Siddiqi,Premier University Chittangong,A,1,F,she,0
+Tonmoy Barua,Premier University Chittangong,A,1,M,he,0
+Nadia Akter Wazed,Premier University Chittangong,A,1,F,she,0
+Person 1,IIT KGP,A,1,,,
+Person 2,IIT KGP,A,1,,,
+Person 3,IIT KGP,A,1,,,
+Person 4,IIT KGP,B,1,,,
+Person 5,IIT KGP,B,1,,,
+Person 6,IIT KGP,B,1,,,
+Person 7,IIT KGP,C,1,,,
+Person 8,IIT KGP,C,1,,,
+Person 9,IIT KGP,C,1,,,
+Person 10,IIT KGP,D,1,,,
+Person 11,IIT KGP,D,1,,,
+Person 12,IIT KGP,D,1,,,
+Adithya Iyer,Cross 1,A,1,,,
+Arindrajit Basu,Cross 1,A,1,,,
+Suchisubhra Sarkar,Cross 1,A,1,,,
+Ira Chadha-Sridhar,Cross 2,A,1,,,
+Ramya Chandrasekhar,Cross 2,A,1,,,
+Sanchith Shivakumar,Cross 2,A,1,,,
+Piyush,Venky JGLS Ambedkar Cross,A,1,,,
+Rajesh,Venky JGLS Ambedkar Cross,A,1,,,
+Ishwar,Venky JGLS Ambedkar Cross,A,1,,,
+Debayan Mitra,Stone Cold Steve Austin,A,1,,,
+Ruchir Ash,Stone Cold Steve Austin,A,1,,,
+Raghav Daryanani,Stone Cold Steve Austin,A,1,,,
+Sakib Bin Rashid,ABEG,A,1,,,
+F. H. Yasin Shafi ,ABEG,A,1,,,
+Tahsin Islam,ABEG,A,1,,,
+Mir Mukitur Reza,Accomodation,A,1,,,
+Nayeema Akbar,Accomodation,A,1,,,
+Subrina Fahreen Eusa,Accomodation,A,1,,,
